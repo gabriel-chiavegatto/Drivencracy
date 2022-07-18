@@ -1,24 +1,13 @@
 import express from "express";
-import dotenv from "dotenv";
 import cors from "cors";
-import { MongoClient } from "mongodb";
-
-
+import { newPoll } from "./controllers/newPoll.js";
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-dotenv.config();
 
-const client = new MongoClient(process.env.URL_CONNECT_MONGO);
-let db;
-client.connect().then(()=>{
-    db = client.db("Enquetes");
-});
 
-app.get("/", async (req, res) => {
-    await db.collection('').insertOne({nome: "teste", data:"14/07"});
-});
+app.post("/poll", newPoll);
 
-console.log("hello rodei");
+console.log("hello world");
 app.listen(5000);
